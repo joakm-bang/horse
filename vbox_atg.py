@@ -306,7 +306,7 @@ class Settings:
         #Defaults
         self.debug = True
         self.bannedIP = None
-        self.runlocal = True
+        self.runlocal = False
         self.runLAN = False
         self.delayLambda = 7
         self.bannedIPs = ['213.67.246.', '5.157.7.']
