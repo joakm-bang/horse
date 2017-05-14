@@ -376,8 +376,9 @@ class RaceQueue:
         np.random.shuffle(self.Q)
         
         print(len(self.IDs))
-        print(len(self.all_ids))
-        print(len(self.done_ids))        
+        print(len(all_ids))
+        print(len(done_ids))
+        print(len(self.Q))
         
     def pop(self):
         return(self.Q.pop())
