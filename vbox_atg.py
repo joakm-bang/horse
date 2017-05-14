@@ -948,6 +948,8 @@ class Tables:
 db = Database(settings=settings)
 tables = Tables(db)
 atg = Atg(settings=settings)
+for k, v in settings.dbconfig.items():
+    print(k, v)
 atg.get_games()
 
 
