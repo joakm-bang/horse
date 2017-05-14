@@ -70,9 +70,10 @@ class Browser:
             try:
                 if self.bannedIP is not None:
                     self.getIP()
-                    if self.ip.startswith(self.bannedIP):
-                        print('Proxy is down.')
-                        raise proxyerror()
+                    for bannedIP in self.bannedIPs:
+                        if self.ip.startswith(bannedIP):
+                            print('Proxy is down.')
+                            raise proxyerror()
                 if not noDelay:
                     self.delay()
                     self.t[1] = time()
@@ -181,13 +182,14 @@ class Atg:
     def get_games(self):
         
         self.Q = RaceQueue()
-        while not self.Q.is_empty():
-            ID = self.Q.pop()
-            url = 'https://www.atg.se/services/v1/games/' + ID
-            destination = self.races_path + ID + '.json'
-            self.download_json(url, destination)
-            db.updateField(tables.games, 'scraped', True, 'game_id', ID)
-            print('Downloaded {0}'.format(ID))
+        print(self.Q.pop())
+        #while not self.Q.is_empty():
+            #ID = self.Q.pop()
+            #url = 'https://www.atg.se/services/v1/games/' + ID
+            #destination = self.races_path + ID + '.json'
+            #self.download_json(url, destination)
+            #db.updateField(tables.games, 'scraped', True, 'game_id', ID)
+            #print('Downloaded {0}'.format(ID))
         
 class CalendarParser:
     
@@ -307,18 +309,16 @@ class Settings:
         self.runlocal = True
         self.runLAN = False
         self.delayLambda = 7
-        self.bannedIP = '213.67.246.'
+        self.bannedIPs = ['213.67.246.', '5.157.7.']
         self.error_log = '/media/joakim/Storage/Dropbox/atg/data/logs/browser.log'
         self.paths = {'races':'/media/joakim/Storage/Dropbox/atg/data/json/races/',
                       'calendar':'/media/joakim/Storage/Dropbox/atg/data/json/calendardays/'}
         
         if self.computer.startswith('vbox'):
-            self.paths['calendar'] = '/home/joakim/work/horse'
+            self.paths['calendar'] = '/home/joakim/work/horse/jsons/'
         self.computer = os.environ['COMPUTER_NAME']
         if self.computer == 'vbox1':
             self.runLAN = True
-            self.bannedIP = '73.170.245.33'
-            
         
         self.configure_db()
 
@@ -943,6 +943,7 @@ class Tables:
         self.racedays = 'racedays'
         self.games = 'games'
         self.races = 'races'
+
 
 db = Database(settings=settings)
 tables = Tables(db)
