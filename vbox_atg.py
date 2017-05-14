@@ -182,14 +182,13 @@ class Atg:
     def get_games(self):
         
         self.Q = RaceQueue()
-        print(self.Q.pop())
-        #while not self.Q.is_empty():
-            #ID = self.Q.pop()
-            #url = 'https://www.atg.se/services/v1/games/' + ID
-            #destination = self.races_path + ID + '.json'
-            #self.download_json(url, destination)
-            #db.updateField(tables.games, 'scraped', True, 'game_id', ID)
-            #print('Downloaded {0}'.format(ID))
+        while not self.Q.is_empty():
+            ID = self.Q.pop()
+            url = 'https://www.atg.se/services/v1/games/' + ID
+            destination = self.races_path + ID + '.json'
+            self.download_json(url, destination)
+            db.updateField(tables.games, 'scraped', True, 'game_id', ID)
+            print('Downloaded {0}'.format(ID))
         
 class CalendarParser:
     
@@ -319,6 +318,10 @@ class Settings:
             self.paths['calendar'] = '/home/joakim/work/horse/jsons/'
         if self.computer == 'vbox1':
             self.runLAN = True
+            self.sels = [('type', '=', 'vinnare'),
+                         ('pdate', '>=', 0),
+                         ('pdate', '<', 734698),
+                         ('scraped', '=', False)]
         
         self.configure_db()
 
@@ -344,19 +347,7 @@ class RaceQueue:
     
     def fill(self):
         self.Q = db.getValues('game_id', tables.games,
-                                  sels=[('type', '!=', 'plats'),
-                                        ('type', '!=', 'raket'),
-                                        ('type', '!=', 'vinnare'),
-                                        ('type', '!=', 'komb'),
-                                        ('type', '!=', 'trio'),
-                                        ('type', '!=', 'tvilling'),
-                                        ('type', '!=', 'vp'),
-                                        ('type', '!=', 'V3'),
-                                        ('type', '!=', 'V4'),
-                                        ('type', '!=', 'V5'),
-                                        ('type', '!=', 'dd'),
-                                        ('type', '!=', 'ld'),
-                                        ('scraped', '=', False)])
+                                  sels=settings.sels)
         np.random.shuffle(self.Q)
                 
     def pop(self):
@@ -944,9 +935,6 @@ class Tables:
         self.games = 'games'
         self.races = 'races'
 
-
-for k, v in settings.dbconfig.items():
-    print(k, v)
 
 db = Database(settings=settings)
 tables = Tables(db)
