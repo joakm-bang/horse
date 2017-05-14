@@ -368,13 +368,16 @@ class RaceQueue:
             reader = csv.reader(in_file)
             for row in reader:
                 self.IDs.append(row)
-    
         
         all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate0 and x[2] == settings.game_type])
         done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
-        
+
         self.Q = list(all_ids.difference(done_ids))
         np.random.shuffle(self.Q)
+        
+        print(len(self.IDs))
+        print(len(self.all_ids))
+        print(len(self.done_ids))        
         
     def pop(self):
         return(self.Q.pop())
