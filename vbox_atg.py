@@ -138,13 +138,13 @@ class Atg:
                                     '/media/joakim/Storage/Dropbox/atg/data/json/races/')
         self.calendar_path = settings.paths.get('calendar', 
                                        '/media/joakim/Storage/Dropbox/atg/data/json/calendardays/')
-        self.first_contact()
+        #self.first_contact()
         
-    def first_contact(self):
-        computers = db.getValues('computer', 'info')
-        if settings.computer not in computers:
-            db.write2db({'computer':settings.computer, 
-                         'time':datetime.now(), 'ip':self.br.ip}, tables.info)
+    #def first_contact(self):
+        #computers = db.getValues('computer', 'info')
+        #if settings.computer not in computers:
+            #db.write2db({'computer':settings.computer, 
+                         #'time':datetime.now(), 'ip':self.br.ip}, tables.info)
         
     def download_json(self, url, destination):
         
