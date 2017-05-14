@@ -369,7 +369,7 @@ class RaceQueue:
             for row in reader:
                 self.IDs.append(row)
         
-        all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate0 and x[2] == settings.game_type])
+        all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1 and x[2] == settings.game_type])
         done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
 
         self.Q = list(all_ids.difference(done_ids))
