@@ -114,10 +114,16 @@ class Browser:
                 except:
                     print('Error getting IP on attempt ' + str(n) + '. Sleeping for ' + str(S) + ' seconds.')
                     sleep(S)
+        if not goon:
+            self.announce_IP()
 
-
-
-
+    def announce_IP(self):
+        db.updateField(tables.info, 'time', datetime.now(), 'computer', settings.computer)
+        db.updateField(tables.info, 'ip', self.ip, 'computer', settings.computer)
+        
+        monster_ip = db.getValues('ip', 'info', sels=[('computer', '=', 'monstret')])
+        self.bannedIPs += list(monster_ip)
+        
 class proxyerror(Exception):
     def __init__(self, value='Proxy error'):
         pass
@@ -132,7 +138,14 @@ class Atg:
                                     '/media/joakim/Storage/Dropbox/atg/data/json/races/')
         self.calendar_path = settings.paths.get('calendar', 
                                        '/media/joakim/Storage/Dropbox/atg/data/json/calendardays/')
-    
+        self.first_contact()
+        
+    def first_contact(self):
+        computers = db.getValues('computer', 'info')
+        if settings.computer not in computers:
+            db.write2db({'computer':settings.computer, 
+                         'time':datetime.now(), 'ip':self.br.ip}, tables.info)
+        
     def download_json(self, url, destination):
         
         if os.path.exists(destination):
@@ -934,6 +947,7 @@ class Tables:
         self.racedays = 'racedays'
         self.games = 'games'
         self.races = 'races'
+        self.info = 'info'
 
 
 db = Database(settings=settings)
