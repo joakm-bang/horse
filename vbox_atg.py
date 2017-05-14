@@ -201,7 +201,7 @@ class Atg:
             url = 'https://www.atg.se/services/v1/games/' + ID
             destination = self.races_path + ID + '.json'
             self.download_json(url, destination)
-            db.updateField(tables.games, 'scraped', True, 'game_id', ID)
+            #db.updateField(tables.games, 'scraped', True, 'game_id', ID)
             print('Downloaded {0}'.format(ID))
         
 class CalendarParser:
@@ -361,8 +361,6 @@ class RaceQueue:
     
     def fill(self):
         
-        #with open(settings.paths['Q'] + 'IDs.pickle') as ids_file:
-            #self.IDs = pickle.load(ids_file)
         self.IDs = []
         with open(settings.paths['Q'] + 'ids.csv', 'r') as in_file:
             reader = csv.reader(in_file)
@@ -374,12 +372,7 @@ class RaceQueue:
 
         self.Q = list(all_ids.difference(done_ids))
         np.random.shuffle(self.Q)
-        
-        print(len(self.IDs))
-        print(len(all_ids))
-        print(len(done_ids))
-        print(len(self.Q))
-        
+                
     def pop(self):
         return(self.Q.pop())
     
