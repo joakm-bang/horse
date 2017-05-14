@@ -1,5 +1,5 @@
 import numpy as np
-import pandas as pd
+#import pandas as pd
 import psycopg2
 import mechanicalsoup
 from time import sleep, time, ctime
@@ -311,6 +311,15 @@ class Settings:
         self.error_log = '/media/joakim/Storage/Dropbox/atg/data/logs/browser.log'
         self.paths = {'races':'/media/joakim/Storage/Dropbox/atg/data/json/races/',
                       'calendar':'/media/joakim/Storage/Dropbox/atg/data/json/calendardays/'}
+        
+        if self.computer.startswith('vbox'):
+            self.paths['calendar'] = '/home/joakim/work/horse'
+        self.computer = os.environ['COMPUTER_NAME']
+        if self.computer == 'vbox1':
+            self.runLAN = True
+            self.bannedIP = '73.170.245.33'
+            
+        
         self.configure_db()
 
     def configure_db(self):
