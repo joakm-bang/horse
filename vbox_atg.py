@@ -314,9 +314,9 @@ class Settings:
         self.paths = {'races':'/media/joakim/Storage/Dropbox/atg/data/json/races/',
                       'calendar':'/media/joakim/Storage/Dropbox/atg/data/json/calendardays/'}
         
+        self.computer = os.environ['COMPUTER_NAME']
         if self.computer.startswith('vbox'):
             self.paths['calendar'] = '/home/joakim/work/horse/jsons/'
-        self.computer = os.environ['COMPUTER_NAME']
         if self.computer == 'vbox1':
             self.runLAN = True
         
