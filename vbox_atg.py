@@ -6,7 +6,8 @@ from datetime import datetime, timedelta
 import requests
 import json
 import os
-import pickle
+#import pickle
+import csv
 
 def convert_to_ordinal(d):
     return(datetime.strptime(d, '%Y-%m-%d').toordinal())
@@ -360,8 +361,14 @@ class RaceQueue:
     
     def fill(self):
         
-        with open(settings.paths['Q'] + 'IDs.pickle') as ids_file:
-            self.IDs = pickle.load(ids_file)
+        #with open(settings.paths['Q'] + 'IDs.pickle') as ids_file:
+            #self.IDs = pickle.load(ids_file)
+        self.IDs = []
+        with open(settings.paths['Q'] + 'ids.csv', 'r') as in_file:
+            reader = csv.reader(in_file)
+            for row in reader:
+                self.IDs.append(row)
+    
         
         all_ids = set([x[0] for x in self.IDs if int(x[1]) > self.pdate0 and int(x[1]) <= self.pdate0 and x[2] == self.game_type])
         done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
