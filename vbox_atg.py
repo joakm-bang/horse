@@ -1,5 +1,4 @@
 import numpy as np
-#import pandas as pd
 import psycopg2
 import mechanicalsoup
 from time import sleep, time, ctime
@@ -7,6 +6,7 @@ from datetime import datetime, timedelta
 import requests
 import json
 import os
+import pickle
 
 def convert_to_ordinal(d):
     return(datetime.strptime(d, '%Y-%m-%d').toordinal())
@@ -114,15 +114,15 @@ class Browser:
                 except:
                     print('Error getting IP on attempt ' + str(n) + '. Sleeping for ' + str(S) + ' seconds.')
                     sleep(S)
-        if not goon:
-            self.announce_IP()
+        #if not goon:
+            #self.announce_IP()
 
-    def announce_IP(self):
-        db.updateField(tables.info, 'time', datetime.now(), 'computer', settings.computer)
-        db.updateField(tables.info, 'ip', self.ip, 'computer', settings.computer)
+    #def announce_IP(self):
+        #db.updateField(tables.info, 'time', datetime.now(), 'computer', settings.computer)
+        #db.updateField(tables.info, 'ip', self.ip, 'computer', settings.computer)
         
-        monster_ip = db.getValues('ip', 'info', sels=[('computer', '=', 'monstret')])
-        self.bannedIPs += list(monster_ip)
+        #monster_ip = db.getValues('ip', 'info', sels=[('computer', '=', 'monstret')])
+        #self.bannedIPs += list(monster_ip)
         
 class proxyerror(Exception):
     def __init__(self, value='Proxy error'):
@@ -320,7 +320,7 @@ class Settings:
         self.bannedIP = None
         self.runlocal = False
         self.runLAN = False
-        self.delayLambda = 7
+        self.delayLambda = 10
         self.bannedIPs = ['213.67.246.', '5.157.7.']
         self.error_log = '/media/joakim/Storage/Dropbox/atg/data/logs/browser.log'
         self.paths = {'races':'/media/joakim/Storage/Dropbox/atg/data/json/races/',
@@ -329,12 +329,12 @@ class Settings:
         self.computer = os.environ['COMPUTER_NAME']
         if self.computer.startswith('vbox'):
             self.paths['races'] = '/home/joakim/work/horse/jsons/'
+            self.paths['Q'] = '/home/joakim/work/horse/'
         if self.computer == 'vbox1':
             self.runLAN = True
-            self.sels = [('type', '=', 'vinnare'),
-                         ('pdate', '>=', 0),
-                         ('pdate', '<', 734698),
-                         ('scraped', '=', False)]
+            self.pdate0 = 0
+            self.pdate1 = 734698
+            self.game_type = 'vinnare'
         
         self.configure_db()
 
@@ -359,10 +359,16 @@ class RaceQueue:
         self.fill()
     
     def fill(self):
-        self.Q = db.getValues('game_id', tables.games,
-                                  sels=settings.sels)
+        
+        with open(settings.paths['Q'] + 'IDs.pickle') as ids_file:
+            self.IDs = pickle.load(ids_file)
+        
+        all_ids = set([x[0] for x in self.IDs if int(x[1]) > self.pdate0 and int(x[1]) <= self.pdate0 and x[2] == self.game_type])
+        done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
+        
+        self.Q = list(all_ids.difference(done_ids))
         np.random.shuffle(self.Q)
-                
+        
     def pop(self):
         return(self.Q.pop())
     
@@ -939,19 +945,19 @@ class Database:
                 out_data['scraped'] = False
                 self.write2db(out_data, tables.calendar_files)
 
-class Tables:
+#class Tables:
 
-    def __init__(self, db, setuptables=True):		
-        self.db = db
-        self.calendar_files = 'calendar_files'
-        self.racedays = 'racedays'
-        self.games = 'games'
-        self.races = 'races'
-        self.info = 'info'
+    #def __init__(self, db, setuptables=True):		
+        #self.db = db
+        #self.calendar_files = 'calendar_files'
+        #self.racedays = 'racedays'
+        #self.games = 'games'
+        #self.races = 'races'
+        #self.info = 'info'
 
 
-db = Database(settings=settings)
-tables = Tables(db)
+#db = Database(settings=settings)
+#tables = Tables(db)
 atg = Atg(settings=settings)
 atg.get_games()
 
