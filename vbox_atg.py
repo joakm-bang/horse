@@ -315,7 +315,7 @@ class Settings:
         
         self.computer = os.environ['COMPUTER_NAME']
         if self.computer.startswith('vbox'):
-            self.paths['calendar'] = '/home/joakim/work/horse/jsons/'
+            self.paths['races'] = '/home/joakim/work/horse/jsons/'
         if self.computer == 'vbox1':
             self.runLAN = True
             self.sels = [('type', '=', 'vinnare'),
