@@ -1,9 +1,8 @@
 from os import system
 from time import sleep, ctime
-from sys import stdout
 
-
-
+with open('/home/joakim/work/mlog.log', 'w') as status_file:
+    status_file.write('Starting at {0}\n'.format(ctime(), str(td)))
 
 sleep(300)
 while True:
@@ -12,8 +11,8 @@ while True:
     td = int(datetime.timestamp(datetime.now())) - ts
     if td > 600:
         system('sudo reboot')
-    with open('/home/joakim/work/mlog.log', 'w') as status_file:
-        status_file.write('System online at {0}, with {1} idle seconds'.format(ctime(), str(td)))
+    with open('/home/joakim/work/mlog.log', 'a') as status_file:
+        status_file.write('System online at {0}, with {1} idle seconds\n'.format(ctime(), str(td)))
     sleep(30)
     
     
