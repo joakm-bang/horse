@@ -90,7 +90,7 @@ class Browser:
                 self.nap('Proxy error', perr, napTime)
                 
             except Exception as err:
-                tryCount = maxtries + 1
+                #tryCount = maxtries + 1
                 self.nap(str(err), err, napTime)
         
         if goon:
