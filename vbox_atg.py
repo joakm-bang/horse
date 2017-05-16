@@ -8,8 +8,10 @@ import json
 import os
 #import pickle
 import csv
+from sys import stdout
 
 # sleep before getting to work
+stdout = open('/home/joakim/work/log/log', 'w')
 sleep(15)
 
 def convert_to_ordinal(d):
