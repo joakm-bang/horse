@@ -9,6 +9,9 @@ import os
 #import pickle
 import csv
 
+# sleep before getting to work
+sleep(15)
+
 def convert_to_ordinal(d):
     return(datetime.strptime(d, '%Y-%m-%d').toordinal())
 
@@ -96,6 +99,23 @@ class Browser:
         if goon:
             print('Request failed')
             raise ValueError('Request failed')
+        else:
+            self.heartbeat()
+            
+    def heartbeat(self):
+        # Issue heartbeat
+        goon = True
+        tries = 0
+        while tries < 5:
+            tries += 1
+            try:
+                with open(settings.paths['Q'] + 'heartbeat.txt', 'w') as hb_file:
+                    hb_file.write(str(int(datetime.timestamp(datetime.now()))))
+                    tries = 10
+            except:
+                print('Heartbeat error')
+                sleep(5)
+                    
     
     
         
