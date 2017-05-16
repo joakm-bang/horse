@@ -1,5 +1,8 @@
 from os import system
 from time import sleep
+from sys import stdout
+
+stdout = open('/home/joakim/work/mlog.log', 'w')
 
 sleep(300)
 while True:
