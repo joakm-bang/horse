@@ -1,3 +1,2 @@
 #!/bin/bash
-cd /home/joakim/work/horse/
-/home/joakim/anaconda2/envs/python3/bin/python3 vbox_atg.py
+/home/joakim/anaconda2/envs/python3/bin/python3 /home/joakim/work/horse/vbox_atg.py
