@@ -3,6 +3,7 @@ from time import sleep, ctime
 from sys import stdout
 
 stdout = open('/home/joakim/work/mlog.log', 'w')
+print('Starting at {0}'.format(ctime()))
 
 sleep(300)
 while True:
