@@ -1,4 +1,4 @@
 #!/bin/bash
 source activate python3
 cd /home/joakim/atg/script/vbox/
-python vbox_atg.py
+/home/joakim/anaconda2/envs/python3/bin/python3 vbox_atg.py
