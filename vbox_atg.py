@@ -82,15 +82,16 @@ class Browser:
                 #timeout issue
                 self.page = self.br.get(targetURL, timeout=30)
                 self.t[2] = time()
+                if self.page.status_code != 200:
+                    raise ValueError('Bad response code')
                 goon = False
             except proxyerror as perr:
                 print('Proxy error')
                 self.nap('Proxy error', perr, napTime)
                 
             except Exception as err:
-                if str(err) == u'HTTP Error 404: Not Found':
-                    tryCount = maxtries + 1
-                    self.nap(str(err), err, napTime)
+                tryCount = maxtries + 1
+                self.nap(str(err), err, napTime)
         
         if goon:
             print('Request failed')
