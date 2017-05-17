@@ -8,10 +8,12 @@ import json
 import os
 #import pickle
 import csv
-from sys import stdout
+#from sys import stdout
 
 # sleep before getting to work
-stdout = open('/home/joakim/work/log.log', 'w')
+log_file = '/home/joakim/work/log.log'
+with open(log_file, 'w') as log:
+    log.write('Starting at {0}\n'.format(ctime()))
 sleep(15)
 
 def convert_to_ordinal(d):
@@ -225,7 +227,9 @@ class Atg:
             destination = self.races_path + ID + '.json'
             self.download_json(url, destination)
             #db.updateField(tables.games, 'scraped', True, 'game_id', ID)
-            print('Downloaded {0}'.format(ID))
+            #print('Downloaded {0}'.format(ID))
+            with open(log_file, 'a') as log:
+                log.write('Downloaded {0}\n'.format(ID))
         
 class CalendarParser:
     
