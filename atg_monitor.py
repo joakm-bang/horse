@@ -1,5 +1,6 @@
 from os import system
 from time import sleep, ctime
+from datetime import datetime
 
 with open('/home/joakim/work/mlog.log', 'w') as status_file:
     status_file.write('Starting at {0}\n'.format(ctime()))
