@@ -356,8 +356,10 @@ class Settings:
         
         self.computer = os.environ['COMPUTER_NAME']
         if self.computer.startswith('vbox'):
-            self.paths['races'] = '/home/joakim/work/horse/jsons/'
-            self.paths['Q'] = '/home/joakim/work/horse/'
+            #self.paths['races'] = '/home/joakim/work/horse/jsons/'
+            #self.paths['Q'] = '/home/joakim/work/horse/'
+            self.paths['races'] = '/media/sf_Shared/json/'
+            self.paths['Q'] = '/media/sf_Shared/'
         if self.computer == 'vbox1':
             self.runLAN = True
             self.pdate0 = 0
