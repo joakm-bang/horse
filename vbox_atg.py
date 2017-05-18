@@ -113,7 +113,7 @@ class Browser:
         while tries < 5:
             tries += 1
             try:
-                with open(settings.paths['Q'] + 'heartbeat.txt', 'w') as hb_file:
+                with open(settings.paths['hb'] + 'heartbeat.txt', 'w') as hb_file:
                     hb_file.write(str(int(datetime.timestamp(datetime.now()))))
                     tries = 10
             except:
@@ -357,7 +357,7 @@ class Settings:
         self.computer = os.environ['COMPUTER_NAME']
         if self.computer.startswith('vbox'):
             #self.paths['races'] = '/home/joakim/work/horse/jsons/'
-            #self.paths['Q'] = '/home/joakim/work/horse/'
+            self.paths['hb'] = '/home/joakim/work/horse/'
             self.paths['races'] = '/media/sf_Shared/json/'
             self.paths['Q'] = '/media/sf_Shared/'
         if self.computer == 'vbox1':
