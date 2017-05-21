@@ -377,14 +377,14 @@ class Settings:
             self.runLAN = True
             self.pdate0 = 735139
             self.pdate1 = 735580
-            self.game_type = 'plats'
+            self.game_type = 'tvilling'
             #self.game_type = 'vinnare'
         if self.computer == 'vbox4':
             self.runLAN = True
             self.pdate0 = 735580
             self.pdate1 = 736021
             #self.game_type = 'vinnare'
-            self.game_type = 'plats'
+            self.game_type = 'tvilling'
         if self.computer == 'vbox5':
             self.runLAN = True
             self.pdate0 = 736021
