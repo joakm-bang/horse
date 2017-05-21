@@ -351,8 +351,10 @@ class Settings:
             self.runLAN = True
             self.pdate0 = 0
             #self.pdate1 = 734698
-            self.pdate1 = 1000000
+            self.pdate1 = 735580
+            #self.pdate1 = 1000000
             self.game_type = 'vinnare'
+            #self.game_type = 'vp'
         if self.computer == 'vbox2':
             self.runLAN = True
             #self.pdate0 = 734698
@@ -375,10 +377,10 @@ class Settings:
         if self.computer == 'vbox5':
             self.runLAN = True
             #self.pdate0 = 736021
-            self.pdate0 = 0
+            self.pdate0 = 735580
             self.pdate1 = 1000000
-            #self.game_type = 'vinnare'
-            self.game_type = 'plats'
+            self.game_type = 'vinnare'
+            #self.game_type = 'plats'
     
         self.configure_db()
 
