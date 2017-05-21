@@ -177,15 +177,15 @@ class Atg:
         if os.path.exists(destination):
             print('Skipping existing file: {0}'.format(destination.split('/')[-1]))
         else:
-            with open('/home/joakim/work/vbox_log.csv', 'a') as out_file:
-                out_file.write('{0}, {1}'.format(ctime(), destination.split('/')[-1]))                    
+            with open('{0}{1}_log.csv'.format(settings.paths['Q'], settings.computer), 'a') as out_file:
+                out_file.write('{0}, {1}\n'.format(ctime(), destination.split('/')[-1]))                    
             self.br.open(url)
             if self.br.page.status_code == 200:
                 with open(destination, 'w') as out_file:
                     json.dump(self.br.page.json(), out_file)
             else:
-                with open('/home/joakim/work/bad_response_code.csv', 'a') as out_file:
-                    out_file.write('{0}, {1}, {2}'.format(ctime(), str(self.br.page.status_code), destination.split('/')[-1]))                    
+                with open('{0}{1}bad_code.csv'.format(settings.paths['Q'], settings.computer), 'a') as out_file:
+                    out_file.write('{0}, {1}, {2}\n'.format(ctime(), str(self.br.page.status_code), destination.split('/')[-1]))                    
                 raise ValueError('Invalid JSON?')
         
     def get_all_calendars(self, start=False, end=False):
