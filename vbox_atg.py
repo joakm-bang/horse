@@ -69,7 +69,7 @@ class Browser:
 
     #----------------------------------------------------------------------
     #Hit the webpage
-    def open(self, targetURL, maxtries=10, napTime=90, mess='Error while opening page', 
+    def open(self, targetURL, maxtries=5, napTime=60, mess='Error while opening page', 
              noDelay=False):
         goon = True
         tryCount = 0
@@ -102,9 +102,10 @@ class Browser:
         
         if goon:
             print('Request failed')
-            raise ValueError('Request failed')
+            return(False)
         else:
             self.heartbeat()
+            return(True)
             
     def heartbeat(self):
         # Issue heartbeat
@@ -140,15 +141,6 @@ class Browser:
                 except:
                     print('Error getting IP on attempt ' + str(n) + '. Sleeping for ' + str(S) + ' seconds.')
                     sleep(S)
-        #if not goon:
-            #self.announce_IP()
-
-    #def announce_IP(self):
-        #db.updateField(tables.info, 'time', datetime.now(), 'computer', settings.computer)
-        #db.updateField(tables.info, 'ip', self.ip, 'computer', settings.computer)
-        
-        #monster_ip = db.getValues('ip', 'info', sels=[('computer', '=', 'monstret')])
-        #self.bannedIPs += list(monster_ip)
         
 class proxyerror(Exception):
     def __init__(self, value='Proxy error'):
@@ -164,13 +156,6 @@ class Atg:
                                     '/media/joakim/Storage/Dropbox/atg/data/json/races/')
         self.calendar_path = settings.paths.get('calendar', 
                                        '/media/joakim/Storage/Dropbox/atg/data/json/calendardays/')
-        #self.first_contact()
-        
-    #def first_contact(self):
-        #computers = db.getValues('computer', 'info')
-        #if settings.computer not in computers:
-            #db.write2db({'computer':settings.computer, 
-                         #'time':datetime.now(), 'ip':self.br.ip}, tables.info)
         
     def download_json(self, url, destination):
         
@@ -179,14 +164,14 @@ class Atg:
         else:
             with open('{0}{1}_log.csv'.format(settings.paths['Q'], settings.computer), 'a') as out_file:
                 out_file.write('{0}, {1}\n'.format(ctime(), destination.split('/')[-1]))                    
-            self.br.open(url)
-            if self.br.page.status_code == 200:
+            res = self.br.open(url)
+            if res:
                 with open(destination, 'w') as out_file:
                     json.dump(self.br.page.json(), out_file)
             else:
                 with open('{0}{1}bad_code.csv'.format(settings.paths['Q'], settings.computer), 'a') as out_file:
                     out_file.write('{0}, {1}, {2}\n'.format(ctime(), str(self.br.page.status_code), destination.split('/')[-1]))                    
-                raise ValueError('Invalid JSON?')
+                
         
     def get_all_calendars(self, start=False, end=False):
         
@@ -230,8 +215,6 @@ class Atg:
             url = 'https://www.atg.se/services/v1/games/' + ID
             destination = self.races_path + ID + '.json'
             self.download_json(url, destination)
-            #db.updateField(tables.games, 'scraped', True, 'game_id', ID)
-            #print('Downloaded {0}'.format(ID))
             with open(log_file, 'a') as log:
                 log.write('Downloaded {0}\n'.format(ID))
         
