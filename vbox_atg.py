@@ -335,7 +335,7 @@ class Settings:
         self.bannedIP = None
         self.runlocal = False
         self.runLAN = False
-        self.delayLambda = 8
+        self.delayLambda = 7
         self.bannedIPs = ['213.67.246.', '5.157.7.']
         self.error_log = '/media/joakim/Storage/Dropbox/atg/data/logs/browser.log'
         self.paths = {'races':'/media/joakim/Storage/Dropbox/atg/data/json/races/',
