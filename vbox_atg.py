@@ -373,11 +373,11 @@ class Settings:
         if self.computer == 'vbox5':
             self.runLAN = True
             #self.pdate0 = 736021
-            self.pdate0 = 735580
-            #self.pdate0 = 0            
+            #self.pdate0 = 735580
+            self.pdate0 = 0            
             self.pdate1 = 1000000
-            self.game_type = 'vp'
-            #self.game_type = 'plats'
+            #self.game_type = 'vp'
+            self.game_type = 'plats'
     
         self.configure_db()
 
