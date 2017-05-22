@@ -351,10 +351,10 @@ class Settings:
             self.runLAN = True
             self.pdate0 = 0
             #self.pdate1 = 734700
-            self.pdate1 = 735580
-            #self.pdate1 = 1000000
-            self.game_type = 'vp'
-            #self.game_type = 'plats'
+            #self.pdate1 = 735580
+            self.pdate1 = 1000000
+            #self.game_type = 'vp'
+            self.game_type = 'plats'
         if self.computer == 'vbox2':
             self.runLAN = True
             #self.pdate0 = 734698
@@ -412,8 +412,9 @@ class RaceQueue:
         
         all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1 and x[2] == settings.game_type])
         done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
-
-        self.Q = list(all_ids.difference(done_ids))
+        bad_ids = set(['plats_2016-10-28_48_99', 'plats_2013-10-13_86_9'])
+        
+        self.Q = list(all_ids.difference(done_ids).difference(bad_ids))
         np.random.shuffle(self.Q)
                 
     def pop(self):
