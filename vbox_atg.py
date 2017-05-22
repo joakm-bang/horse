@@ -216,7 +216,7 @@ class Atg:
             destination = self.races_path + ID + '.json'
             self.download_json(url, destination)
             with open(log_file, 'a') as log:
-                log.write('Downloaded {0}\n'.format(ID))
+                log.write('Downloaded {0} at {1}\n'.format(ID, ctime()))
         
 class CalendarParser:
     
