@@ -359,11 +359,11 @@ class Settings:
             self.runLAN = True
             #self.pdate0 = 734698
             self.pdate0 = 0
-            self.pdate1 = 735139
+            self.pdate1 = 734900
             self.game_type = 'tvilling'
         if self.computer == 'vbox3':
             self.runLAN = True
-            self.pdate0 = 735139
+            self.pdate0 = 734900
             self.pdate1 = 736021
             self.game_type = 'tvilling'
         if self.computer == 'vbox4':
