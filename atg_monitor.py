@@ -10,7 +10,7 @@ while True:
     with open('/home/joakim/work/horse/heartbeat.txt', 'r') as hb_file:
         ts = int(hb_file.read())
     td = int(datetime.timestamp(datetime.now())) - ts
-    if td > 600:
+    if td > 300:
         system('sudo reboot')
     with open('/home/joakim/work/mlog.log', 'a') as status_file:
         status_file.write('System online at {0}, with {1} idle seconds\n'.format(ctime(), str(td)))
