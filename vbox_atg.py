@@ -69,7 +69,7 @@ class Browser:
 
     #----------------------------------------------------------------------
     #Hit the webpage
-    def open(self, targetURL, maxtries=5, napTime=60, mess='Error while opening page', 
+    def open(self, targetURL, maxtries=5, napTime=30, mess='Error while opening page', 
              noDelay=False):
         goon = True
         tryCount = 0
@@ -172,6 +172,10 @@ class Atg:
                 with open('{0}{1}bad_code.csv'.format(settings.paths['Q'], settings.computer), 'a') as out_file:
                     out_file.write('{0}, {1}, {2}\n'.format(ctime(), str(self.br.page.status_code), destination.split('/')[-1]))                    
                 
+                if self.br.page.status_code == 500:
+                    with open(settings.paths['Q'] + 'bad_ids.txt', 'a') as out_file:
+                        out_file.write(destination.split('/')[-1] + '\n')
+                    
         
     def get_all_calendars(self, start=False, end=False):
         
@@ -413,8 +417,14 @@ class RaceQueue:
         
         all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1 and x[2] == settings.game_type])
         done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
-        bad_ids = set(['plats_2016-10-28_48_99', 'plats_2013-10-13_86_9', 'tvilling_2011-11-14_63_7'])
+        #bad_ids = set(['plats_2016-10-28_48_99', 'plats_2013-10-13_86_9', 'tvilling_2011-11-14_63_7'])
         
+        bad_ids = []
+        with open(settings.paths['Q'] + 'bad_ids.txt', 'r') as in_file:
+            for ID in in_file:
+                bad_ids.append(ID.strip('\n'))
+        bad_ids = set(bad_ids)
+            
         self.Q = list(all_ids.difference(done_ids).difference(bad_ids))
         np.random.shuffle(self.Q)
                 
