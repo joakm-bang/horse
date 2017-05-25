@@ -218,6 +218,7 @@ class Atg:
         
         self.Q = RaceQueue()
         print('Queue length: ' + str(self.Q.len()))
+        qn = 0
         while not self.Q.is_empty():
             ID = self.Q.pop()
             ID = 'tvilling_2011-11-07_63_2'
@@ -226,6 +227,10 @@ class Atg:
             destination = self.races_path + ID + '.json'
             print(destination)
             self.download_json(url, destination)
+            qn += 1
+            if qn == 100:
+                self.Q.fill()
+                qn = 0
             #with open(log_file, 'a') as log:
                 #log.write('Downloaded {0} at {1}\n'.format(ID, ctime()))
         

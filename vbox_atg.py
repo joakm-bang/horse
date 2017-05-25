@@ -213,6 +213,7 @@ class Atg:
     
     def get_games(self):
         
+        qn = 0
         self.Q = RaceQueue()
         while not self.Q.is_empty():
             ID = self.Q.pop()
@@ -221,6 +222,12 @@ class Atg:
             self.download_json(url, destination)
             with open(log_file, 'a') as log:
                 log.write('Downloaded {0} at {1}\n'.format(ID, ctime()))
+
+            qn += 1
+            if qn == 100:
+                self.Q.fill()
+                qn = 0
+            
         
 class CalendarParser:
     
