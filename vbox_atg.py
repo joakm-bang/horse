@@ -174,7 +174,7 @@ class Atg:
                 
                 if self.br.page.status_code == 500:
                     with open(settings.paths['Q'] + 'bad_ids.txt', 'a') as out_file:
-                        out_file.write(destination.split('/')[-1] + '\n')
+                        out_file.write(destination.split('/')[-1].strip('.json') + '\n')
                     
         
     def get_all_calendars(self, start=False, end=False):
