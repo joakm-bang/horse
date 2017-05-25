@@ -217,7 +217,7 @@ class Atg:
     def get_games(self):
         
         self.Q = RaceQueue()
-        print('Queue length: ' + str(len(self.Q)))
+        print('Queue length: ' + str(self.Q.len()))
         while not self.Q.is_empty():
             ID = self.Q.pop()
             ID = 'tvilling_2011-11-07_63_2'
