@@ -348,6 +348,7 @@ class Settings:
         self.computer = os.environ['COMPUTER_NAME']
         if self.computer.startswith('vbox'):
             #self.paths['races'] = '/home/joakim/work/horse/jsons/'
+            self.error_log = '/home/joakim/work/browser.log'
             self.paths['hb'] = '/home/joakim/work/horse/'
             self.paths['races'] = '/media/sf_Shared/json/'
             self.paths['Q'] = '/media/sf_Shared/'

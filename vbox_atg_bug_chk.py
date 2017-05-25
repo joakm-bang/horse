@@ -64,7 +64,7 @@ class Browser:
 
     #----------------------------------------------------------------------
     #Hit the webpage
-    def open(self, targetURL, maxtries=5, napTime=30, mess='Error while opening page', 
+    def open(self, targetURL, maxtries=3, napTime=10, mess='Error while opening page', 
              noDelay=False):
         goon = True
         tryCount = 0
