@@ -413,7 +413,7 @@ class RaceQueue:
         
         all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1 and x[2] == settings.game_type])
         done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
-        bad_ids = set(['plats_2016-10-28_48_99', 'plats_2013-10-13_86_9'])
+        bad_ids = set(['plats_2016-10-28_48_99', 'plats_2013-10-13_86_9', 'tvilling_2011-11-14_63_7'])
         
         self.Q = list(all_ids.difference(done_ids).difference(bad_ids))
         np.random.shuffle(self.Q)
