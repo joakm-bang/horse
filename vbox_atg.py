@@ -217,7 +217,7 @@ class Atg:
         self.Q = RaceQueue()
         while not self.Q.is_empty():
             ID = self.Q.pop()
-            url = 'https://www.atg.se/services/v1/games/' + ID
+            url = 'https://www.atg.se/services/racinginfo/v1/api/games/' + ID
             destination = self.races_path + ID + '.json'
             self.download_json(url, destination)
             with open(log_file, 'a') as log:
@@ -363,8 +363,8 @@ class Settings:
             self.runLAN = True
             self.pdate0 = 0
             #self.pdate1 = 734700
-            self.pdate1 = 734900
-            #self.pdate1 = 1000000
+            #self.pdate1 = 734900
+            self.pdate1 = 1000000
             self.game_type = 'vp'
             #self.game_type = 'plats'
         if self.computer == 'vbox2':
@@ -376,9 +376,9 @@ class Settings:
             self.game_type = 'tvilling'
         if self.computer == 'vbox3':
             self.runLAN = True
-            self.pdate0 = 734900
-            self.pdate1 = 735450
-            self.game_type = 'vp'
+            self.pdate0 = 0
+            self.pdate1 = 1000000
+            self.game_type = 'trio'
         if self.computer == 'vbox4':
             self.runLAN = True
             self.pdate0 = 735450
