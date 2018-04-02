@@ -381,9 +381,9 @@ class Settings:
             self.game_type = 'trio'
         if self.computer == 'vbox4':
             self.runLAN = True
-            self.pdate0 = 735450
-            self.pdate1 = 736000
-            self.game_type = 'vp'
+            self.pdate0 = 0
+            self.pdate1 = 1000000
+            self.game_type = 'tvilling'
         if self.computer == 'vbox5':
             self.runLAN = True
             #self.pdate0 = 736021
