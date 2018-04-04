@@ -365,7 +365,7 @@ class Settings:
             #self.pdate1 = 734700
             #self.pdate1 = 734900
             self.pdate1 = 1000000
-            self.game_type = 'vp'
+            self.game_type = 'vinnare'
             #self.game_type = 'plats'
         if self.computer == 'vbox2':
             self.runLAN = True
