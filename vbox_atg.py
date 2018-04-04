@@ -378,7 +378,8 @@ class Settings:
             self.runLAN = True
             self.pdate0 = 0
             self.pdate1 = 1000000
-            self.game_type = 'trio'
+            self.exclude = True
+            self.game_type = {'vinnare', 'plats'}
         if self.computer == 'vbox4':
             self.runLAN = True
             self.pdate0 = 0
@@ -423,7 +424,10 @@ class RaceQueue:
             for row in reader:
                 self.IDs.append(row)
         
-        all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1 and x[2] == settings.game_type])
+        if not hasattr(settings, 'exclude'):
+            all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1 and x[2] == settings.game_type])
+        else:
+            all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1 and x[2] not in settings.game_type])
         #all_ids = set([x[0] for x in self.IDs if int(x[1]) > settings.pdate0 and int(x[1]) <= settings.pdate1])
         done_ids = set([x.partition('.')[0] for x in os.listdir(settings.paths['races'])])
         #bad_ids = set(['plats_2016-10-28_48_99', 'plats_2013-10-13_86_9', 'tvilling_2011-11-14_63_7'])
